@@ -1,0 +1,51 @@
+Andreea Prigoreanu
+321CA
+                                    Etapa 1 - proiect
+
+Am impartit clasele in pachete, dupa functionalitate:
+    - input: contine clasele cu ajutorul carora se face parsarea datelor din fisierele json de
+    intrare, folosind biblioteca Jackson
+        * InputData
+        * ChildInput
+        * ChildUpdate
+        * GiftInput
+        * InitialData
+        * AnnualChange
+
+    - output: contine clasele cu ajutorul carora se scriu datele de output in fisirele json de
+    iesire, folosind biblioteca Jackson
+        * ChildOutput
+        * AnnualChildren
+        * Output
+        * JsonWriter
+
+    - entities: contine pachete in care sunt modelate principalele entitati ale proiectului
+        -> child: contine clasa Child cu campurile: id, firstName, lastName, age(se incrementeaza
+        in fiecare an, pana la 18 ani cand copilul este scos din baza de date a mosului), city,
+        niceScores(lista cu toate scorurile de cumintenie adunate de copil de-a lungul anilor),
+        giftsPreferences(lista cu categoriile de cadouri preferate, se actualizeaza intr-un nou an,
+        daca este cazul)
+
+            Intrucat scorul de cumintenie se calculeaza diferit in functie de categoria de varsta a
+        copilului, am ales sa utilizez design pattern-ul Strategy.
+            Astfel, pachetul contine si clasa abstracta ScoreStrategy, cu metoda abstracta
+        getAverageScore, ce calculeaza average score-ul de cumintenie pentru anul curent
+            > clasa este extinsa de urmatoarele clase, care implementeaza metoda getAverageScore:
+                * BabyScoreStrategy
+                * KidScoreStrategy
+                * TeenScoreStrategy
+
+        -> gift: contine clasa Gift, cu campurile aferente unui cadou (name, price, category)
+
+        -> santa: contine clasa Santa, o baza de date cu copiii si cadourile din anul curent,
+        retinuti in listele children si gifts
+            Clasa este de tip Singleton pentru a face listele cu copii si cadouri usor de accesat.
+            Clasa contine metodele:
+            > populateDatabase: salveaza datele din fisierele de intrare
+            > updateDatabase: realizeaza modificarile necesare unui an nou in lista de copii si
+            in lista de cadouri
+            > getBudgetUnit: calculeaza bugetul pe unitate din anul curent
+            > distributePresents: asigneaza cadourile fiecarui copil din anul curent
+
+    - simulation: clasa Simulation contine metoda statica simulation ce realizeaza actiunile
+    necesare pentru numarul de ani dati si construieste output-ul
