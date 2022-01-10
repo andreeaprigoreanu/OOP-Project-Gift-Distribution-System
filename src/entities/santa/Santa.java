@@ -12,6 +12,7 @@ import input.InitialData;
 import input.InputData;
 import output.AnnualChildren;
 import output.ChildOutput;
+import output.GiftOutput;
 import output.Output;
 
 import java.util.ArrayList;
@@ -93,12 +94,13 @@ public final class Santa {
             if (childInput.getAge() <= Constants.MAX_TEEN_AGE) {
                 children.add(new Child(childInput.getId(), childInput.getLastName(),
                         childInput.getFirstName(), childInput.getAge(), childInput.getCity(),
-                        childInput.getNiceScore(), childInput.getGiftsPreferences()));
+                        childInput.getNiceScore(), childInput.getGiftsPreferences(),
+                        childInput.getNiceScoreBonus(), childInput.getElf()));
             }
         }
         for (GiftInput giftInput : initialData.getSantaGiftsList()) {
             gifts.add(new Gift(giftInput.getProductName(), giftInput.getPrice(),
-                    giftInput.getCategory()));
+                    giftInput.getCategory(), giftInput.getQuantity()));
         }
     }
 
@@ -130,7 +132,8 @@ public final class Santa {
                 if (childInput.getAge() <= Constants.MAX_TEEN_AGE) {
                     children.add(new Child(childInput.getId(), childInput.getLastName(),
                             childInput.getFirstName(), childInput.getAge(), childInput.getCity(),
-                            childInput.getNiceScore(), childInput.getGiftsPreferences()));
+                            childInput.getNiceScore(), childInput.getGiftsPreferences(),
+                            childInput.getNiceScoreBonus(), childInput.getElf()));
                 }
             }
         }
@@ -172,7 +175,7 @@ public final class Santa {
 
         for (GiftInput giftInput : annualChange.getNewGifts()) {
             gifts.add(new Gift(giftInput.getProductName(), giftInput.getPrice(),
-                    giftInput.getCategory()));
+                    giftInput.getCategory(), giftInput.getQuantity()));
         }
     }
 
@@ -227,7 +230,7 @@ public final class Santa {
             Double assignedBudget = budgetUnit * child.getAverageScore();
             Double assignedBudgetCopy = assignedBudget;
 
-            List<Gift> receivedGifts = new ArrayList<>();
+            List<GiftOutput> receivedGifts = new ArrayList<>();
             for (Category category : child.getGiftsPreferences()) {
                 List<Gift> allGiftsFromCategory = this.getAllGiftsFromCategory(category);
                 assert allGiftsFromCategory != null;
@@ -238,7 +241,8 @@ public final class Santa {
                     Gift gift = allGiftsFromCategory.get(0);
                     if (Double.compare(gift.getPrice(), assignedBudget) <= 0) {
                         assignedBudget -= gift.getPrice();
-                        receivedGifts.add(gift);
+                        receivedGifts.add(new GiftOutput(gift.getProductName(), gift.getPrice(),
+                                gift.getCategory()));
                     }
                 }
             }

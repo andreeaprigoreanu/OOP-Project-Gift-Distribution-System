@@ -1,6 +1,5 @@
 package output;
 
-import entities.gift.Gift;
 import enums.Category;
 import enums.Cities;
 
@@ -17,13 +16,13 @@ public final class ChildOutput {
     private Double averageScore;
     private List<Double> niceScoreHistory;
     private Double assignedBudget;
-    private List<Gift> receivedGifts;
+    private List<GiftOutput> receivedGifts;
 
     public ChildOutput(final Integer id, final String lastName, final String firstName,
                        final Cities city, final Integer age,
                        final List<Category> giftsPreferences, final Double averageScore,
                        final List<Double> niceScoreHistory, final Double assignedBudget,
-                       final List<Gift> receivedGifts) {
+                       final List<GiftOutput> receivedGifts) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -108,11 +107,11 @@ public final class ChildOutput {
         this.assignedBudget = assignedBudget;
     }
 
-    public List<Gift> getReceivedGifts() {
+    public List<GiftOutput> getReceivedGifts() {
         return receivedGifts;
     }
 
-    public void setReceivedGifts(final List<Gift> receivedGifts) {
+    public void setReceivedGifts(final List<GiftOutput> receivedGifts) {
         this.receivedGifts = receivedGifts;
     }
 }

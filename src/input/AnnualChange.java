@@ -1,5 +1,7 @@
 package input;
 
+import enums.DistributionStrategyEnum;
+
 import java.util.ArrayList;
 
 public final class AnnualChange {
@@ -7,6 +9,7 @@ public final class AnnualChange {
     private ArrayList<GiftInput> newGifts;
     private ArrayList<ChildInput> newChildren;
     private ArrayList<ChildUpdate> childrenUpdates;
+    private DistributionStrategyEnum strategy;
 
     public Double getNewSantaBudget() {
         return newSantaBudget;
@@ -38,5 +41,24 @@ public final class AnnualChange {
 
     public void setChildrenUpdates(final ArrayList<ChildUpdate> childrenUpdates) {
         this.childrenUpdates = childrenUpdates;
+    }
+
+    public DistributionStrategyEnum getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(DistributionStrategyEnum strategy) {
+        this.strategy = strategy;
+    }
+
+    @Override
+    public String toString() {
+        return "AnnualChange{" +
+                "newSantaBudget=" + newSantaBudget +
+                ", newGifts=" + newGifts +
+                ", newChildren=" + newChildren +
+                ", childrenUpdates=" + childrenUpdates +
+                ", strategy=" + strategy +
+                '}';
     }
 }

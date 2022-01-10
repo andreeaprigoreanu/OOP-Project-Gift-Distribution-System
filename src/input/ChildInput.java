@@ -13,6 +13,8 @@ public final class ChildInput {
     private Cities city;
     private Double niceScore;
     private ArrayList<Category> giftsPreferences;
+    private Integer niceScoreBonus;
+    private String elf;
 
     public Integer getId() {
         return id;
@@ -68,5 +70,36 @@ public final class ChildInput {
 
     public void setGiftsPreferences(final ArrayList<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
+    }
+
+    public Integer getNiceScoreBonus() {
+        return niceScoreBonus;
+    }
+
+    public void setNiceScoreBonus(Integer niceScoreBonus) {
+        this.niceScoreBonus = niceScoreBonus;
+    }
+
+    public String getElf() {
+        return elf;
+    }
+
+    public void setElf(String elf) {
+        this.elf = elf;
+    }
+
+    @Override
+    public String toString() {
+        return "ChildInput{" +
+                "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", age=" + age +
+                ", city=" + city +
+                ", niceScore=" + niceScore +
+                ", giftsPreferences=" + giftsPreferences +
+                ", niceScoreBonus=" + niceScoreBonus +
+                ", elf=" + elf +
+                '}';
     }
 }

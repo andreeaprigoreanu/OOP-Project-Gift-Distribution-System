@@ -32,4 +32,13 @@ public final class InitialData {
     public void setCities(final ArrayList<Cities> cities) {
         this.cities = cities;
     }
+
+    @Override
+    public String toString() {
+        return "InitialData{" +
+                "children=" + children +
+                ", santaGiftsList=" + santaGiftsList +
+                ", cities=" + cities +
+                '}';
+    }
 }

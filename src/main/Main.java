@@ -32,6 +32,8 @@ public final class Main {
             ObjectMapper objectMapper = new ObjectMapper();
             InputData inputData = objectMapper.readValue(new File(inputFile), InputData.class);
 
+            System.out.println(inputData);
+
             Output output = Simulation.getSimulation(inputData);
 
             new File("output").mkdir();

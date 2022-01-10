@@ -18,10 +18,13 @@ public final class Child {
     private final List<Double> niceScores;
     // lista cu categoriile de cadouri preferate:
     private final List<Category> giftsPreferences;
+    private final Integer niceScoreBonus;
+    private String elf;
 
     public Child(final Integer id, final String lastName, final String firstName,
                  final Integer age, final Cities city, final Double niceScore,
-                 final List<Category> giftsPreferences) {
+                 final List<Category> giftsPreferences, final Integer niceScoreBonus,
+                 final String elf) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -30,6 +33,8 @@ public final class Child {
         this.niceScores = new ArrayList<>();
         this.niceScores.add(niceScore);
         this.giftsPreferences = new ArrayList<>(giftsPreferences);
+        this.niceScoreBonus = niceScoreBonus;
+        this.elf = elf;
     }
 
     public Integer getId() {
@@ -62,6 +67,18 @@ public final class Child {
 
     public List<Category> getGiftsPreferences() {
         return giftsPreferences;
+    }
+
+    public Integer getNiceScoreBonus() {
+        return niceScoreBonus;
+    }
+
+    public String getElf() {
+        return elf;
+    }
+
+    public void setElf(String elf) {
+        this.elf = elf;
     }
 
     /**
@@ -103,6 +120,14 @@ public final class Child {
     public Double getAverageScore() {
         ScoreStrategy scoreStrategy =
                 ScoreStrategyFactory.createScoreStrategy(this);
-        return scoreStrategy.getAverageScore();
+        Double averageScore =  scoreStrategy.getAverageScore();
+
+        averageScore += averageScore * niceScoreBonus / 100;
+
+        if (Double.compare(averageScore, 10.0) > 0) {
+            averageScore = 10.0;
+        }
+
+        return averageScore;
     }
 }

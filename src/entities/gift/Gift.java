@@ -6,11 +6,14 @@ public final class Gift {
     private final String productName;
     private final Double price;
     private final Category category;
+    private Integer quantity;
 
-    public Gift(final String productName, final Double price, final Category category) {
+    public Gift(final String productName, final Double price, final Category category,
+                final Integer quantity) {
         this.productName = productName;
         this.price = price;
         this.category = category;
+        this.quantity = quantity;
     }
 
     public String getProductName() {
@@ -23,5 +26,13 @@ public final class Gift {
 
     public Category getCategory() {
         return category;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
