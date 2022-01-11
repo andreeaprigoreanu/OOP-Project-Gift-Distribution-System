@@ -3,13 +3,11 @@ package entities.santa;
 import common.Constants;
 import entities.child.Child;
 import entities.gift.Gift;
+import entities.santa.distributionStrategy.PresentsDistributionStrategy;
+import entities.santa.distributionStrategy.PresentsDistributionStrategyFactory;
 import enums.Category;
-import input.AnnualChange;
-import input.ChildInput;
-import input.ChildUpdate;
-import input.GiftInput;
-import input.InitialData;
-import input.InputData;
+import enums.DistributionStrategyEnum;
+import input.*;
 import output.AnnualChildren;
 import output.ChildOutput;
 import output.GiftOutput;
@@ -26,6 +24,7 @@ public final class Santa {
     private Double santaBudget;
     private List<Child> children;
     private List<Gift> gifts;
+    private DistributionStrategyEnum strategy = DistributionStrategyEnum.ID;
 
     private Santa() {
     }
@@ -81,6 +80,13 @@ public final class Santa {
                 .collect(Collectors.toList());
     }
 
+    public void sortChildrenByNiceScore() {
+        children = children.stream()
+                .sorted(Comparator.comparing(Child::getAverageScore).reversed()
+                        .thenComparing(Child::getId))
+                .collect(Collectors.toList());
+    }
+
     /**
      * Populates the database of children and gifts with the input data
      * @param inputData
@@ -115,6 +121,8 @@ public final class Santa {
         this.updateChildrenList(annualChange);
         // update gifts list
         this.updateGiftsList(annualChange);
+        // update strategy
+        strategy = annualChange.getStrategy();
     }
 
     /**
@@ -158,6 +166,8 @@ public final class Santa {
                                 index++;
                             }
                         }
+
+                        child.setElf(childUpdate.getElf());
                     }
                 }
             }
@@ -201,6 +211,30 @@ public final class Santa {
         }
     }
 
+    public List<City> getCitiesList() {
+        List<City> cities = new ArrayList<>();
+
+        for (Child child : children) {
+            boolean foundCity = false;
+            for (City city : cities) {
+                if (child.getCity() == city.getCityName()) {
+                    city.getChildren().add(child);
+                    foundCity = true;
+                    break;
+                }
+            }
+            if (!foundCity) {
+                City newCity = new City(child.getCity());
+                newCity.getChildren().add(child);
+                cities.add(newCity);
+            }
+        }
+
+        return cities.stream().sorted(Comparator.comparing(City::getAverageNiceScore)
+                .reversed().thenComparing(City::getCityNameAsString))
+                .collect(Collectors.toList());
+    }
+
     /**
      * Computes the annual budget unit
      * @return budget unit
@@ -236,7 +270,7 @@ public final class Santa {
                 assert allGiftsFromCategory != null;
                 if (allGiftsFromCategory.size() > 0) {
                     // se alege cadoul cel mai ieftin din acea categorie
-                    // acesta se afla pe pozotia 0 deoarece lista este sortata crescator dupa
+                    // acesta se afla pe pozitia 0 deoarece lista este sortata crescator dupa
                     // preturi
                     Gift gift = allGiftsFromCategory.get(0);
                     if (Double.compare(gift.getPrice(), assignedBudget) <= 0) {
@@ -256,11 +290,18 @@ public final class Santa {
         output.getAnnualChildren().add(annualChildren);
     }
 
+    public void distributePresentsToChildren(final Output output) {
+        PresentsDistributionStrategy distributionStrategy = PresentsDistributionStrategyFactory
+                .createPresentsDistributionStrategy(strategy, output);
+        distributionStrategy.distributePresents();
+    }
+
     /**
      * resets the children and gifts lists
      */
     public void resetDatabase() {
         children = new ArrayList<>();
         gifts = new ArrayList<>();
+        strategy = DistributionStrategyEnum.ID;
     }
 }

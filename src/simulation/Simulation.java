@@ -23,17 +23,16 @@ public final class Simulation {
         // round 0
         int numRound = 0;
         santa.populateDatabase(inputData);
-        santa.distributePresents(output);
+        santa.distributePresentsToChildren(output);
 
         // round 1->numberOfYears
         while (numRound < santa.getNumberOfYears()) {
             AnnualChange annualChange = inputData.getAnnualChanges().get(numRound);
             santa.updateDatabase(annualChange);
-            santa.distributePresents(output);
+            santa.distributePresentsToChildren(output);
             numRound++;
         }
 
         return output;
-
     }
 }

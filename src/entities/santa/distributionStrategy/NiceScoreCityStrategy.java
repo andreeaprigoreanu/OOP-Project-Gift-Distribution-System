@@ -79,13 +79,14 @@ public class NiceScoreCityStrategy implements PresentsDistributionStrategy {
             if (child.getElf().equals("yellow")) {
                 List<Gift> giftsFromCategory = santa.getAllGiftsFromCategory(child
                         .getGiftsPreferences().get(0));
-                for (Gift gift : giftsFromCategory) {
-                    if (gift.getQuantity() > 0) {
-                        gift.decrementQuantity();
-                        receivedGifts.add(new GiftOutput(gift.getProductName(), gift.getPrice(),
-                                gift.getCategory()));
-                        break;
-                    }
+                assert giftsFromCategory != null;
+                // se incearca asignarea celui mai ieftin cadou din categoria preferata, daca
+                // acesta exista
+                Gift gift = giftsFromCategory.get(0);
+                if (gift.getQuantity() > 0) {
+                    gift.decrementQuantity();
+                    receivedGifts.add(new GiftOutput(gift.getProductName(), gift.getPrice(),
+                            gift.getCategory()));
                 }
             }
             Double budget = ElfBudgetStrategyFactory.createElfBudgetStrategy(child, budgetUnit)

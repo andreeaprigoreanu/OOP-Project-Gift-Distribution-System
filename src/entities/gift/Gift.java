@@ -35,4 +35,8 @@ public final class Gift {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    public void decrementQuantity() {
+        quantity = quantity - 1;
+    }
 }
