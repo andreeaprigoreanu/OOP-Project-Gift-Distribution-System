@@ -21,20 +21,61 @@ public final class Child {
     private final Integer niceScoreBonus;
     private String elf;
 
-    public Child(final Integer id, final String lastName, final String firstName,
-                 final Integer age, final Cities city, final Double niceScore,
-                 final List<Category> giftsPreferences, final Integer niceScoreBonus,
-                 final String elf) {
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.age = age;
-        this.city = city;
-        this.niceScores = new ArrayList<>();
-        this.niceScores.add(niceScore);
-        this.giftsPreferences = new ArrayList<>(giftsPreferences);
-        this.niceScoreBonus = niceScoreBonus;
-        this.elf = elf;
+    public static final class Builder {
+        private final Integer id;
+        private final String lastName;
+        private final String firstName;
+        private final Integer age;
+        private final Cities city;
+        // lista cu toate scorurile de cumintenie:
+        private final List<Double> niceScores;
+        // lista cu categoriile de cadouri preferate:
+        private final List<Category> giftsPreferences;
+        private Integer niceScoreBonus = 0;     // optional
+        private final String elf;
+
+        public Builder(final Integer id, final String lastName, final String firstName,
+                       final Integer age, final Cities city, final Double niceScore,
+                       final List<Category> giftsPreferences, final String elf) {
+            this.id = id;
+            this.lastName = lastName;
+            this.firstName = firstName;
+            this.age = age;
+            this.city = city;
+            this.niceScores = new ArrayList<>();
+            this.niceScores.add(niceScore);
+            this.giftsPreferences = new ArrayList<>(giftsPreferences);
+            this.elf = elf;
+        }
+
+        /**
+         * Initialises optional field niceScoreBonus
+         * @param niceScoreBonus
+         * @return
+         */
+        public Builder niceScoreBonus(final Integer niceScoreBonus) {
+            this.niceScoreBonus = niceScoreBonus;
+            return this;
+        }
+
+        /**
+         * @return new instance of Child
+         */
+        public Child build() {
+            return new Child(this);
+        }
+    }
+
+    private Child(final Builder builder) {
+        this.id = builder.id;
+        this.lastName = builder.lastName;
+        this.firstName = builder.firstName;
+        this.age = builder.age;
+        this.city = builder.city;
+        this.niceScores = builder.niceScores;
+        this.giftsPreferences = builder.giftsPreferences;
+        this.niceScoreBonus = builder.niceScoreBonus;
+        this.elf = builder.elf;
     }
 
     public Integer getId() {

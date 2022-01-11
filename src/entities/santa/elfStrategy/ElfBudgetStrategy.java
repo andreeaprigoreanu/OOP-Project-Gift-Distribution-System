@@ -1,5 +1,8 @@
 package entities.santa.elfStrategy;
 
 public interface ElfBudgetStrategy {
-    public Double calculateBudget();
+    /**
+     * @return calculated budget for a child
+     */
+    Double calculateBudget();
 }

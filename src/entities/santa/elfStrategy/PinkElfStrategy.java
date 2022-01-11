@@ -2,11 +2,11 @@ package entities.santa.elfStrategy;
 
 import entities.child.Child;
 
-public class PinkElfStrategy implements ElfBudgetStrategy {
+public final class PinkElfStrategy implements ElfBudgetStrategy {
     private final Child child;
     private final Double budgetUnit;
 
-    public PinkElfStrategy(Child child, Double budgetUnit) {
+    public PinkElfStrategy(final Child child, final Double budgetUnit) {
         this.child = child;
         this.budgetUnit = budgetUnit;
     }

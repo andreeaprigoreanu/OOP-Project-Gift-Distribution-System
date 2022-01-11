@@ -38,17 +38,7 @@ public final class ChildUpdate {
         return elf;
     }
 
-    public void setElf(String elf) {
+    public void setElf(final String elf) {
         this.elf = elf;
-    }
-
-    @Override
-    public String toString() {
-        return "ChildUpdate{" +
-                "id=" + id +
-                ", niceScore=" + niceScore +
-                ", giftsPreferences=" + giftsPreferences +
-                ", elf=" + elf +
-                '}';
     }
 }

@@ -1,5 +1,8 @@
 package entities.santa.distributionStrategy;
 
 public interface PresentsDistributionStrategy {
-    public void distributePresents();
+    /**
+     * Assigns presents to children for a round
+     */
+    void distributePresents();
 }

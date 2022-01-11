@@ -47,18 +47,7 @@ public final class AnnualChange {
         return strategy;
     }
 
-    public void setStrategy(DistributionStrategyEnum strategy) {
+    public void setStrategy(final DistributionStrategyEnum strategy) {
         this.strategy = strategy;
-    }
-
-    @Override
-    public String toString() {
-        return "AnnualChange{" +
-                "newSantaBudget=" + newSantaBudget +
-                ", newGifts=" + newGifts +
-                ", newChildren=" + newChildren +
-                ", childrenUpdates=" + childrenUpdates +
-                ", strategy=" + strategy +
-                '}';
     }
 }

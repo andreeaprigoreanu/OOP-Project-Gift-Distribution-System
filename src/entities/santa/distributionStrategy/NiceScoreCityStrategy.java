@@ -16,10 +16,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NiceScoreCityStrategy implements PresentsDistributionStrategy {
+public final class NiceScoreCityStrategy implements PresentsDistributionStrategy {
     private final Output output;
 
-    public NiceScoreCityStrategy(Output output) {
+    public NiceScoreCityStrategy(final Output output) {
         this.output = output;
     }
 
@@ -29,11 +29,14 @@ public class NiceScoreCityStrategy implements PresentsDistributionStrategy {
         Santa santa = Santa.getInstance();
         Double budgetUnit = santa.getBudgetUnit();
 
+        // se obtine o lista de orase
         List<City> cities = santa.getCitiesList();
         List<Child> childrenWithNoGifts = new ArrayList<>();
 
+        // se itereaza prin lista de orase ordonala dupa average nice scores
         for (City city : cities) {
             city.sortChildrenById();
+            // se parcurg copiii din oras in ordinea id-urilor
             for (Child child : city.getChildren()) {
                 Double budget = ElfBudgetStrategyFactory.createElfBudgetStrategy(child, budgetUnit)
                         .calculateBudget();
@@ -62,6 +65,8 @@ public class NiceScoreCityStrategy implements PresentsDistributionStrategy {
                     }
                 }
                 if (receivedGifts.size() == 0) {
+                    // daca nu a primit niciun cadou, copilul trebuie adaugat in lista cu copii
+                    // fara cadou
                     childrenWithNoGifts.add(child);
                 } else {
                     // se adauga copilul la output

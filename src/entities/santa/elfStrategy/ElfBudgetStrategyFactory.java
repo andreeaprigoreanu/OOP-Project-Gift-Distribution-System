@@ -2,10 +2,16 @@ package entities.santa.elfStrategy;
 
 import entities.child.Child;
 
-public class ElfBudgetStrategyFactory {
+public final class ElfBudgetStrategyFactory {
     private ElfBudgetStrategyFactory() {
     }
 
+    /**
+     * returns an instance of ElfBudgetStrategy
+     * @param child
+     * @param budgetUnit
+     * @return
+     */
     public static ElfBudgetStrategy createElfBudgetStrategy(final Child child,
                                                             final Double budgetUnit) {
         switch (child.getElf()) {

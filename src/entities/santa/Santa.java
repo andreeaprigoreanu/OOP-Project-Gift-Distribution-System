@@ -7,10 +7,12 @@ import entities.santa.distributionStrategy.PresentsDistributionStrategy;
 import entities.santa.distributionStrategy.PresentsDistributionStrategyFactory;
 import enums.Category;
 import enums.DistributionStrategyEnum;
-import input.*;
-import output.AnnualChildren;
-import output.ChildOutput;
-import output.GiftOutput;
+import input.AnnualChange;
+import input.ChildInput;
+import input.ChildUpdate;
+import input.GiftInput;
+import input.InitialData;
+import input.InputData;
 import output.Output;
 
 import java.util.ArrayList;
@@ -80,6 +82,9 @@ public final class Santa {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Sorts the children by nice score
+     */
     public void sortChildrenByNiceScore() {
         children = children.stream()
                 .sorted(Comparator.comparing(Child::getAverageScore).reversed()
@@ -98,10 +103,11 @@ public final class Santa {
         InitialData initialData = inputData.getInitialData();
         for (ChildInput childInput : initialData.getChildren()) {
             if (childInput.getAge() <= Constants.MAX_TEEN_AGE) {
-                children.add(new Child(childInput.getId(), childInput.getLastName(),
+                children.add(new Child.Builder(childInput.getId(), childInput.getLastName(),
                         childInput.getFirstName(), childInput.getAge(), childInput.getCity(),
                         childInput.getNiceScore(), childInput.getGiftsPreferences(),
-                        childInput.getNiceScoreBonus(), childInput.getElf()));
+                        childInput.getElf()).niceScoreBonus(childInput.getNiceScoreBonus())
+                        .build());
             }
         }
         for (GiftInput giftInput : initialData.getSantaGiftsList()) {
@@ -138,10 +144,11 @@ public final class Santa {
         if (annualChange.getNewChildren() != null) {
             for (ChildInput childInput : annualChange.getNewChildren()) {
                 if (childInput.getAge() <= Constants.MAX_TEEN_AGE) {
-                    children.add(new Child(childInput.getId(), childInput.getLastName(),
+                    children.add(new Child.Builder(childInput.getId(), childInput.getLastName(),
                             childInput.getFirstName(), childInput.getAge(), childInput.getCity(),
                             childInput.getNiceScore(), childInput.getGiftsPreferences(),
-                            childInput.getNiceScoreBonus(), childInput.getElf()));
+                            childInput.getElf()).niceScoreBonus(childInput.getNiceScoreBonus())
+                            .build());
                 }
             }
         }
@@ -211,6 +218,9 @@ public final class Santa {
         }
     }
 
+    /**
+     * @return list with cities sorted by average nice scores of children from cities
+     */
     public List<City> getCitiesList() {
         List<City> cities = new ArrayList<>();
 
@@ -255,41 +265,6 @@ public final class Santa {
      * Assigns gifts to children and saves the results in output
      * @param output stores the data that will be written in the output file
      */
-    public void distributePresents(final Output output) {
-        AnnualChildren annualChildren = new AnnualChildren();
-        Double budgetUnit = this.getBudgetUnit();
-
-        this.sortChildrenById();
-        for (Child child : children) {
-            Double assignedBudget = budgetUnit * child.getAverageScore();
-            Double assignedBudgetCopy = assignedBudget;
-
-            List<GiftOutput> receivedGifts = new ArrayList<>();
-            for (Category category : child.getGiftsPreferences()) {
-                List<Gift> allGiftsFromCategory = this.getAllGiftsFromCategory(category);
-                assert allGiftsFromCategory != null;
-                if (allGiftsFromCategory.size() > 0) {
-                    // se alege cadoul cel mai ieftin din acea categorie
-                    // acesta se afla pe pozitia 0 deoarece lista este sortata crescator dupa
-                    // preturi
-                    Gift gift = allGiftsFromCategory.get(0);
-                    if (Double.compare(gift.getPrice(), assignedBudget) <= 0) {
-                        assignedBudget -= gift.getPrice();
-                        receivedGifts.add(new GiftOutput(gift.getProductName(), gift.getPrice(),
-                                gift.getCategory()));
-                    }
-                }
-            }
-
-            // trebuie adaugat copilul in output
-            annualChildren.getChildren().add(new ChildOutput(child.getId(),
-                    child.getLastName(), child.getFirstName(), child.getCity(), child.getAge(),
-                    child.getGiftsPreferences(), child.getAverageScore(), child.getNiceScores(),
-                    assignedBudgetCopy, receivedGifts));
-        }
-        output.getAnnualChildren().add(annualChildren);
-    }
-
     public void distributePresentsToChildren(final Output output) {
         PresentsDistributionStrategy distributionStrategy = PresentsDistributionStrategyFactory
                 .createPresentsDistributionStrategy(strategy, output);

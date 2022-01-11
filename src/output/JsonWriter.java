@@ -10,7 +10,7 @@ import java.io.IOException;
 public final class JsonWriter {
     private final String outputFile;
 
-    public JsonWriter(String outputFile) {
+    public JsonWriter(final String outputFile) {
         this.outputFile = outputFile;
     }
 

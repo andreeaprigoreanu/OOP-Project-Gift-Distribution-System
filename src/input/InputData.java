@@ -39,14 +39,4 @@ public final class InputData {
     public void setAnnualChanges(final ArrayList<AnnualChange> annualChanges) {
         this.annualChanges = annualChanges;
     }
-
-    @Override
-    public String toString() {
-        return "InputData{" +
-                "numberOfYears=" + numberOfYears +
-                ", santaBudget=" + santaBudget +
-                ", initialData=" + initialData +
-                ", annualChanges=" + annualChanges +
-                '}';
-    }
 }

@@ -2,12 +2,12 @@ package output;
 
 import enums.Category;
 
-public class GiftOutput {
+public final class GiftOutput {
     private String productName;
     private Double price;
     private Category category;
 
-    public GiftOutput(String productName, Double price, Category category) {
+    public GiftOutput(final String productName, final Double price, final Category category) {
         this.productName = productName;
         this.price = price;
         this.category = category;
@@ -17,7 +17,7 @@ public class GiftOutput {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public void setProductName(final String productName) {
         this.productName = productName;
     }
 
@@ -25,7 +25,7 @@ public class GiftOutput {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(final Double price) {
         this.price = price;
     }
 
@@ -33,7 +33,7 @@ public class GiftOutput {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(final Category category) {
         this.category = category;
     }
 }

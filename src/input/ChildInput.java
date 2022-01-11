@@ -76,7 +76,7 @@ public final class ChildInput {
         return niceScoreBonus;
     }
 
-    public void setNiceScoreBonus(Integer niceScoreBonus) {
+    public void setNiceScoreBonus(final Integer niceScoreBonus) {
         this.niceScoreBonus = niceScoreBonus;
     }
 
@@ -84,22 +84,7 @@ public final class ChildInput {
         return elf;
     }
 
-    public void setElf(String elf) {
+    public void setElf(final String elf) {
         this.elf = elf;
-    }
-
-    @Override
-    public String toString() {
-        return "ChildInput{" +
-                "id=" + id +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", age=" + age +
-                ", city=" + city +
-                ", niceScore=" + niceScore +
-                ", giftsPreferences=" + giftsPreferences +
-                ", niceScoreBonus=" + niceScoreBonus +
-                ", elf=" + elf +
-                '}';
     }
 }

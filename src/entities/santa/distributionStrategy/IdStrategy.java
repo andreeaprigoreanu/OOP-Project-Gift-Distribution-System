@@ -15,10 +15,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class IdStrategy implements PresentsDistributionStrategy {
+public final class IdStrategy implements PresentsDistributionStrategy {
     private final Output output;
 
-    public IdStrategy(Output output) {
+    public IdStrategy(final Output output) {
         this.output = output;
     }
 
@@ -28,6 +28,7 @@ public class IdStrategy implements PresentsDistributionStrategy {
         Santa santa = Santa.getInstance();
         Double budgetUnit = santa.getBudgetUnit();
 
+        // copiii se sorteaza dupa id
         santa.sortChildrenById();
         List<Child> childrenWithNoGifts = new ArrayList<>();
         for (Child child : santa.getChildren()) {
@@ -57,6 +58,7 @@ public class IdStrategy implements PresentsDistributionStrategy {
                 }
             }
             if (receivedGifts.size() == 0) {
+                // daca nu a primit niciun cadou, copilul este adaugat in lista cu copii fara cadou
                 childrenWithNoGifts.add(child);
             } else {
                 // se adauga copilul la output

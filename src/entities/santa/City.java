@@ -12,7 +12,7 @@ public final class City {
     private final Cities cityName;
     private List<Child> children;
 
-    public City(Cities cityName) {
+    public City(final Cities cityName) {
         this.cityName = cityName;
         this.children = new ArrayList<>();
     }
@@ -25,7 +25,7 @@ public final class City {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(final List<Child> children) {
         this.children = children;
     }
 
@@ -33,11 +33,17 @@ public final class City {
         return cityName.toString();
     }
 
+    /**
+     * Sorts the children list by children id
+     */
     public void sortChildrenById() {
         children = children.stream().sorted(Comparator.comparing(Child::getId))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @return average nice score of children from the same city
+     */
     public Double getAverageNiceScore() {
         this.sortChildrenById();
         Double avgScoresSum = 0.0;

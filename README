@@ -1,5 +1,33 @@
 Andreea Prigoreanu
 321CA
+                                    Etapa 2 - proiect
+
+    In etapa 2 a proiectului am extins codul scris la etapa 1. Pentru a implementa noile
+functionalitati, adaugat in pachetul santa:
+    - pachetul elfStrategy, care contine interfata ElfBudgetStrategy, implementata de clasele:
+        * BlackElfStrategy - primeste in constructor un copil, calculeaza bugetul copilului si
+                            scade 30% din el
+        * PinkElfStrategy - primeste in constructor un copil, calculeaza bugetul copilului si
+                            il creste cu 30%
+        * BasicElgStrategy - primeste in constructor un copil si calculeaza bugetul copilului
+        Pe langa aceastea, in pachet se regaseste si clasa ElfBudgetStrategyFactory, cu ajutorul
+        careia se creeaza o strategie de calculare a bugetului unui copil.
+    - pachetul distributionStrategy care contine interfata PresentsDistributionStrategy,
+    implementata de clasele:
+        * IdStrategy - imparte cadourile copiilor in ordinea id-urilor
+        * NiceScoreStrategy - imparte cadourile copiilor in ordinea average nice scores
+        * NiceScoreCityStrategy - imparte cadourile copiilor in ordinea average nice scores ale
+                                oraselor din care fac parte copiii
+        Pe langa aceastea, in pachet se regaseste si clasa PresentsDistributionStrategy, cu
+        ajutorul careia se creeaza o strategie de asignare a cadourilor.
+
+    De asemenea, clasei Child am adaugat clasa interna Builder care contine metoda build, prin
+    intermediul careia se instantiaza un copil.
+
+    In cadrul proiectului am utilizat design pattern-urile: Singleton, Strategy, Factory, Builder.
+
+---------------------------------------------------------------------------------------------------
+
                                     Etapa 1 - proiect
 
 Am impartit clasele in pachete, dupa functionalitate:
